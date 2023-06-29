@@ -38,10 +38,10 @@ export function createDom(fiber) {
 
   const isProperty = key => key !== 'children';
 
-  Object.keys(element.props)
+  Object.keys(fiber.props)
     .filter(isProperty)
     .forEach(name => {
-      dom[name] = element.props[name];
+      dom[name] = fiber.props[name];
     });
 
   return dom;
@@ -75,22 +75,25 @@ function performUnitOfWork(fiber) {
   if (!fiber.dom) {
     fiber.dom = createDom(fiber);
   }
-  
-  // 2. 创建新的 fiber
-  const elements = fiber.props.children;
+
+  if (fiber.parent) {
+    fiber.parent.dom.appendChild(fiber.dom);
+  }
+
   let index = 0;
   let prevSibling = null;
+  const elements = fiber.props.children;
 
   while(index < elements.length) {
     const element = elements[index];
-
     const newFiber = {
       type: element.type,
       props: element.props,
       parent: fiber,
       dom: null,
     }
-    // 第一个子节点
+
+      // 第一个子节点
     if (index === 0) {
       fiber.child = newFiber;
     } else {
@@ -114,11 +117,11 @@ function performUnitOfWork(fiber) {
     if (nextFiber.sibling) {
       return nextFiber.sibling;
     }
+    // console.log(nextFiber)
     // 没有兄弟节点，返回父节点的兄弟节点
     nextFiber = nextFiber.parent;
   }
 }
-
 
 export default {
   render

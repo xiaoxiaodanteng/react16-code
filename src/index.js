@@ -2,10 +2,12 @@
 import React from '../react';
 import ReactDOM from '../react/react-dom';
 
-const element = <div title="foo">
-  <span>Hello</span>
+const element = <section>
+  <h1 title="foo">
+    <span>Hello</span>
+  </h1>
   <a href="http://example.com">链接</a>
-</div>;
+</section>;
 console.log('element: ', element);
 
 // const node = document.createElement(element.type);
