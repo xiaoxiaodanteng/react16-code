@@ -6,7 +6,7 @@ const element = <section>
   <h1 title="foo">
     <span>Hello</span>
   </h1>
-  <a href="http://example.com">链接</a>
+  <a href="https://baidu.com">链接</a>
 </section>;
 console.log('element: ', element);
 
